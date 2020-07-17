@@ -83,3 +83,10 @@ def parse_item(item):
             break
 
     return item_buffer
+
+
+def process_log(log):
+    """
+    Return parsed log.
+    """
+    return parse_itemized_log(itemize_log(log))

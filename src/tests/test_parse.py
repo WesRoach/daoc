@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from src.parse import itemize_log, parse_itemized_log, parse_item
+from src.parse import itemize_log, parse_itemized_log, parse_item, process_log
 
 __file_path = Path(__file__).parent.absolute()
 
@@ -36,6 +36,55 @@ def test_parse_item(txt=chatlog_single_item_txt):
         "item_name": "Edgebender Arcanium Exceptional Moon Claw",
         "total_utility": "43.333",
         "single_skill_utility": "38.333",
+    }
+
+    assert res == exp
+
+
+def test_process_log(log=chatlog_three_items_txt):
+    res = process_log(log)
+    exp = {
+        "items": [
+            {
+                "magical_bonuses": {
+                    "strength": "11",
+                    "quickness": "10",
+                    "hits": "28",
+                    "cold": "4",
+                    "crush": "1",
+                    "slash": "1",
+                    "thrust": "3",
+                    "shields": "1",
+                    "all_melee_weapon_skills": "2",
+                },
+                "item_name": "Slapping Supreme Ring",
+                "total_utility": "64",
+                "single_skill_utility": "54",
+            },
+            {
+                "magical_bonuses": {
+                    "strength": "30",
+                    "body": "9",
+                    "thrust": "8",
+                },
+                "item_name": "Tuscarian Ring of Might",
+                "total_utility": "54",
+            },
+            {
+                "magical_bonuses": {
+                    "dexterity": "13",
+                    "quickness": "13",
+                    "crush": "1",
+                    "energy": "5",
+                    "heat": "5",
+                    "all_melee_weapon_skills": "1",
+                    "all_archery_skills": "1",
+                },
+                "item_name": "Adroit Supreme Necklace",
+                "total_utility": "54.333",
+                "single_skill_utility": "49.333",
+            },
+        ]
     }
 
     assert res == exp
