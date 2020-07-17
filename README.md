@@ -1,2 +1,3 @@
-# daoc-parse-chatlogs
+# DAoC CLI
+
 Utility to parse DAoC chatlogs
