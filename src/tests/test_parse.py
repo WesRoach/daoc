@@ -4,10 +4,10 @@ from src.parse import itemize_log, parse_itemized_log, parse_item
 
 __file_path = Path(__file__).parent.absolute()
 
-with open(__file_path / "chatlog_single_item.txt", "r") as f:
+with open(__file_path / "chatlog_single_item.log", "r") as f:
     chatlog_single_item_txt = f.readlines()
 
-with open(__file_path / "chatlog_three_items.txt", "r") as f:
+with open(__file_path / "chatlog_three_items.log", "r") as f:
     chatlog_three_items_txt = f.readlines()
 
 
