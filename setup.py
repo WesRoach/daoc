@@ -7,6 +7,7 @@ setuptools.setup(
     author_email="wesr000@gmail.com",
     description="CLI Utility for DAoC",
     packages=setuptools.find_packages(),
+    include_package_data=True,
     install_requires=["click"],
     entry_points="""
         [console_scripts]
