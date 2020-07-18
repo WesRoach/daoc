@@ -85,8 +85,22 @@ def parse_item(item):
     return item_buffer
 
 
+def convert_log_attributes(processed_log):
+    # Handle "items" from log
+    for item in processed_log["items"]:
+        # Updated total_utility and single_skill_utility to int
+        for k, v in item.items():
+            if k in ("total_utility", "single_skill_utility"):
+                item[k] = float(v)
+        # update stat bonuses to int
+        for stat, bonus in item["magical_bonuses"].items():
+            item["magical_bonuses"][stat] = int(bonus)
+
+    return processed_log
+
+
 def process_log(log):
     """
     Return parsed log.
     """
-    return parse_itemized_log(itemize_log(log))
+    return convert_log_attributes(parse_itemized_log(itemize_log(log)))

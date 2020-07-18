@@ -18,7 +18,6 @@ def parsed_item():
     }
 
 
-
 @pytest.fixture(scope="session")
 def parsed_log():
     return {
