@@ -10,6 +10,7 @@ parsed_bonus_to_effect_dict = {
     "constitution": TypeEffectTuple("Stat", "Constitution"),
     "quickness": TypeEffectTuple("Stat", "Quickness"),
     "hits": TypeEffectTuple("Stat", "Hits"),
+    "power": TypeEffectTuple("Stat", "Power"),
     "crush": TypeEffectTuple("Resist", "Crush Resist"),
     "slash": TypeEffectTuple("Resist", "Slash Resist"),
     "thrust": TypeEffectTuple("Resist", "Thrust Resist"),
@@ -20,10 +21,15 @@ parsed_bonus_to_effect_dict = {
     "heat": TypeEffectTuple("Resist", "Heat Resist"),
     "cold": TypeEffectTuple("Resist", "Cold Resist"),
     "parry": TypeEffectTuple("Skill", "Parry"),
+    "stealth": TypeEffectTuple("Skill", "Stealth"),
     "shields": TypeEffectTuple("Skill", "Shield"),
     "all_melee_weapon_skills": TypeEffectTuple(
         "Skill", "All Melee Skill Bonus"
     ),
+    "all_dual_wielding_skills": TypeEffectTuple(
+        "Skill", "All Dual Wield Skill Bonus"
+    ),
+    "all_archery_skills": TypeEffectTuple("Skill", "Archery Skill Bonus"),
 }
 
 
@@ -119,6 +125,7 @@ location_alias = [
     ("Neck", "neck"),
     ("Cloak", "cloak"),
     ("Jewel", "gem"),
+    ("Jewel", "jewel"),
     ("Belt", "belt"),
     ("Right Ring", "ring"),
     ("Right Wrist", "bracer"),
@@ -137,7 +144,7 @@ def guess_location(item_name: str):
         return ""
 
 
-def fill_tempate(Location, Realm, ItemName, slots):
+def fill_template(Location, Realm, ItemName, slots):
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <SCItem>
     <ActiveState>drop</ActiveState>
@@ -155,11 +162,6 @@ def fill_tempate(Location, Realm, ItemName, slots):
     <CLASSRESTRICTIONS>
         <CLASS>All</CLASS>
     </CLASSRESTRICTIONS>
-    <ISUNIQUE>0</ISUNIQUE>
-    <ORACLE_IGNORE>0</ORACLE_IGNORE>
-    <USER_VALUE>0</USER_VALUE>
-    <VARIANT></VARIANT>
-    <ASSOCIATE IsParent="0"></ASSOCIATE>
     <DROPITEM>
         <SLOT Number="0">
             <Remakes>0</Remakes>
