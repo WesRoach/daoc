@@ -110,7 +110,7 @@ def process_log(log_text):
 
 
 def generate_file_name(item_name, iter):
-    return item_name.replace(" ", "_") + str(iter).zfill(2) + ".xml"
+    return item_name.replace(" ", "_") + "." + str(iter).zfill(2) + ".xml"
 
 
 def log_items_to_loki(processed_log, realm, out_path):
