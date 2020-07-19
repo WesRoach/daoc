@@ -24,7 +24,10 @@ def parse():
 @click.option(
     "--realm",
     prompt=True,
-    type=click.Choice(["Midgard", "Hibernia", "Albion"], case_sensitive=False),
+    default="All",
+    type=click.Choice(
+        ["All", "Midgard", "Hibernia", "Albion"], case_sensitive=False
+    ),
 )
 @click.option(
     "--to",
@@ -43,10 +46,13 @@ def items(chatlog_path, out_path, to, realm):
     click.echo(f"Parsing: {chatlog_path.as_posix()}")
     click.echo(f"Writing items into {out_path.as_posix()}")
 
-    processed_log = process_log(chatlog_path)
+    with open(chatlog_path, "r") as file:
+        log_text = file.readlines()
+
+    processed_log = process_log(log_text)
 
     if to.lower() == "loki":
-        log_items_to_loki(processed_log, out_path)
+        log_items_to_loki(processed_log, realm, out_path)
 
 
 cli.add_command(parse)

@@ -33,17 +33,6 @@ parsed_bonus_to_effect_dict = {
 }
 
 
-def parsed_bonus_to_slot(bonus, value):
-    # bonus == "quickness" => (Type="Stat", Effect="Quickness")
-    # value == 13 => (Amount=13)
-    # Qua == 99 => (Qua=99)
-    return Slot(
-        Effect=parsed_bonus_to_effect_dict[bonus].Effect,
-        Type=parsed_bonus_to_effect_dict[bonus].Type,
-        Amount=value,
-    )
-
-
 class Slot:
     """
     Class defining an item Slot.
@@ -71,6 +60,17 @@ class Slot:
         self.Done = Done
         self.Time = Time
         self.Type = Type
+
+
+def parsed_bonus_to_slot(bonus, value):
+    # bonus == "quickness" => (Type="Stat", Effect="Quickness")
+    # value == 13 => (Amount=13)
+    # Qua == 99 => (Qua=99)
+    return Slot(
+        Effect=parsed_bonus_to_effect_dict[bonus].Effect,
+        Type=parsed_bonus_to_effect_dict[bonus].Type,
+        Amount=value,
+    )
 
 
 def slots_from_item(item) -> List[Slot]:

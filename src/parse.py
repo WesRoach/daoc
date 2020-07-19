@@ -1,4 +1,7 @@
-def itemize_log(text):
+from src.loki import fill_template, guess_location, slots_from_item
+
+
+def itemize_log(log_text):
     """
     Returns dict containing sections of the log, organized into categories.
 
@@ -11,7 +14,7 @@ def itemize_log(text):
     stored = {"items": []}
 
     logging = False
-    for line in text:
+    for line in log_text:
         if logging is False:
             # buffer will store interested sections of the log as we're
             # rolling through the log
@@ -99,8 +102,36 @@ def convert_log_attributes(processed_log):
     return processed_log
 
 
-def process_log(log):
+def process_log(log_text):
     """
     Return parsed log.
     """
-    return convert_log_attributes(parse_itemized_log(itemize_log(log)))
+    return convert_log_attributes(parse_itemized_log(itemize_log(log_text)))
+
+
+def generate_file_name(item_name, iter):
+    return item_name.replace(" ", "_") + str(iter).zfill(2) + ".xml"
+
+
+def log_items_to_loki(processed_log, realm, out_path):
+    for item in processed_log["items"]:
+
+        # some item names are duplicative - iterate of item name exists
+        item_name = item["item_name"]
+        item_name_iter = 1
+        file_name = generate_file_name(item_name, item_name_iter)
+        file_path = out_path / file_name
+
+        while file_path.exists():
+            item_name_iter += 1
+            file_name = generate_file_name(item_name, item_name_iter)
+            file_path = out_path / file_name
+
+        item_template = fill_template(
+            Location=guess_location(item_name),
+            Realm=realm,
+            ItemName=item_name,
+            slots=slots_from_item(item),
+        )
+
+        file_path.write_text(item_template)
