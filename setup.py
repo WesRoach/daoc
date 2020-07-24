@@ -14,7 +14,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     include_package_data=True,
     install_requires=["click", "pygtail"],
-    extras_require={"dev": ["setuptools", "wheel", "pytest", "pytest-cov"]},
+    extras_require={
+        "dev": ["setuptools", "wheel", "twine", "pytest", "pytest-cov"]
+    },
     entry_points="""
         [console_scripts]
         daoc=daoc:cli
