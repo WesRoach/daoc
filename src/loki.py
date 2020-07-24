@@ -9,6 +9,8 @@ parsed_bonus_to_effect_dict = {
     "dexterity": TypeEffectTuple("Stat", "Dexterity"),
     "constitution": TypeEffectTuple("Stat", "Constitution"),
     "quickness": TypeEffectTuple("Stat", "Quickness"),
+    "piety": TypeEffectTuple("Stat", "Piety"),
+    "charisma": TypeEffectTuple("Stat", "Charisma"),
     "hits": TypeEffectTuple("Stat", "Hits"),
     "power": TypeEffectTuple("Stat", "Power"),
     "crush": TypeEffectTuple("Resist", "Crush Resist"),
@@ -132,6 +134,8 @@ location_alias = [
     ("Belt", "belt"),
     ("Right Ring", "ring"),
     ("Right Wrist", "bracer"),
+    ("Right Wrist", "bracelet"),
+    ("Right Wrist", "wrap"),
 ]
 
 
