@@ -11,6 +11,7 @@ setuptools.setup(
     description="CLI Utility for DAoC",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    utl="https://github.com/WesRoach/daoc",
     packages=setuptools.find_packages(),
     include_package_data=True,
     install_requires=["click", "pygtail"],
