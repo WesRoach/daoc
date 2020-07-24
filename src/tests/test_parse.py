@@ -21,11 +21,11 @@ def test_parse_itemized_log(txt=chatlog_single_item_txt):
     assert parsed_itemized_log is not None
 
 
-def test_parse_item(parsed_item, txt=chatlog_single_item_txt):
-    itemized_log = itemize_log(txt)
-    res = parse_item(itemized_log["items"][0])
+# def test_parse_item(parsed_item, txt=chatlog_single_item_txt):
+#     itemized_log = itemize_log(txt)
+#     res = parse_item(itemized_log["items"][0])
 
-    assert res == parsed_item
+#     assert res == parsed_item
 
 
 def test_process_log(parsed_log, log=chatlog_three_items_txt):
