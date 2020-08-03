@@ -1,3 +1,5 @@
+import hashlib
+
 from src.loki import fill_template, guess_location, slots_from_item
 
 
@@ -109,29 +111,37 @@ def process_log(log_text):
     return convert_log_attributes(parse_itemized_log(itemize_log(log_text)))
 
 
-def generate_file_name(item_name, iter):
-    return item_name.replace(" ", "_") + "." + str(iter).zfill(2) + ".xml"
+def generate_file_name(item_name, hash_length, hex_digest):
+    return (
+        item_name.replace(" ", "_")
+        + "."
+        + f"{hex_digest[:hash_length]}"
+        + ".xml"
+    )
 
 
 def log_items_to_loki(processed_log, realm, out_path):
     for item in processed_log["items"]:
 
-        # some item names are duplicative - iterate of item name exists
         item_name = item["item_name"]
-        item_name_iter = 1
-        file_name = generate_file_name(item_name, item_name_iter)
-        file_path = out_path / file_name
-
-        while file_path.exists():
-            item_name_iter += 1
-            file_name = generate_file_name(item_name, item_name_iter)
-            file_path = out_path / file_name
-
         item_template = fill_template(
             Location=guess_location(item_name),
             Realm=realm,
             ItemName=item_name,
             slots=slots_from_item(item),
         )
+
+        hash_object = hashlib.sha1(item_template.encode())
+        hex_dig = hash_object.hexdigest()
+
+        # some item names are duplicative - iterate of item name exists
+        hash_length = 5
+        file_name = generate_file_name(item_name, hash_length, hex_dig)
+        file_path = out_path / file_name
+
+        while file_path.exists():
+            hash_length += 1
+            file_name = generate_file_name(item_name, hash_length, hex_dig)
+            file_path = out_path / file_name
 
         file_path.write_text(item_template)

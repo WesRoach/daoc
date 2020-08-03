@@ -10,6 +10,7 @@ parsed_bonus_to_effect_dict = {
     "constitution": TypeEffectTuple("Stat", "Constitution"),
     "quickness": TypeEffectTuple("Stat", "Quickness"),
     "piety": TypeEffectTuple("Stat", "Piety"),
+    "acuity": TypeEffectTuple("Stat", "Acuity"),
     "charisma": TypeEffectTuple("Stat", "Charisma"),
     "hits": TypeEffectTuple("Stat", "Hits"),
     "power": TypeEffectTuple("Stat", "Power"),
@@ -25,6 +26,7 @@ parsed_bonus_to_effect_dict = {
     "parry": TypeEffectTuple("Skill", "Parry"),
     "stealth": TypeEffectTuple("Skill", "Stealth"),
     "shields": TypeEffectTuple("Skill", "Shield"),
+    "critical_strike": TypeEffectTuple("Skill", "Critical Strike"),
     "all_melee_weapon_skills": TypeEffectTuple(
         "Skill", "All Melee Skill Bonus"
     ),
@@ -32,6 +34,7 @@ parsed_bonus_to_effect_dict = {
         "Skill", "All Dual Wield Skill Bonus"
     ),
     "all_archery_skills": TypeEffectTuple("Skill", "Archery Skill Bonus"),
+    "all_magic_skills": TypeEffectTuple("Skill", "All Magic Skill Bonus"),
 }
 
 
@@ -120,6 +123,7 @@ location_alias = [
     ("Feet", "boots"),
     ("Chest", "chest"),
     ("Chest", "hauberk"),
+    ("Chest", "vest"),
     ("Arms", "greaves"),
     ("Legs", "legs"),
     ("Right Hand", "greave"),
