@@ -15,21 +15,21 @@ def itemize_log(log_text):
     # stored stores finished items from buffer
     stored = {"items": []}
 
-    logging = False
+    item_logging = False
     for line in log_text:
-        if logging is False:
+        if item_logging is False:
             # buffer will store interested sections of the log as we're
             # rolling through the log
             buffer = []
 
         if "<Begin Info:" in line:
-            logging = True
+            item_logging = True
 
-        if logging is True:
+        if item_logging is True:
             buffer.append(line)
 
         if "<End Info>" in line:
-            logging = False
+            item_logging = False
             stored["items"].append(buffer)
 
     return stored
@@ -90,7 +90,7 @@ def parse_item(item):
     return item_buffer
 
 
-def convert_log_attributes(processed_log):
+def item_value_cast(processed_log):
     # Handle "items" from log
     for item in processed_log["items"]:
         # Updated total_utility and single_skill_utility to int
@@ -108,7 +108,7 @@ def process_log(log_text):
     """
     Return parsed log.
     """
-    return convert_log_attributes(parse_itemized_log(itemize_log(log_text)))
+    return item_value_cast(parse_itemized_log(itemize_log(log_text)))
 
 
 def generate_file_name(item_name, hash_length, hex_digest):
@@ -123,6 +123,7 @@ def generate_file_name(item_name, hash_length, hex_digest):
 def log_items_to_loki(processed_log, realm, out_path):
     for item in processed_log["items"]:
 
+        # some item names are duplicative - iterate if item name exists
         item_name = item["item_name"]
         item_template = fill_template(
             Location=guess_location(item_name),
@@ -134,14 +135,10 @@ def log_items_to_loki(processed_log, realm, out_path):
         hash_object = hashlib.sha1(item_template.encode())
         hex_dig = hash_object.hexdigest()
 
-        # some item names are duplicative - iterate of item name exists
-        hash_length = 5
+        # some item names are duplicative - create unique names using hash of
+        # item stats.
+        hash_length = None  # The full hash
         file_name = generate_file_name(item_name, hash_length, hex_dig)
         file_path = out_path / file_name
-
-        while file_path.exists():
-            hash_length += 1
-            file_name = generate_file_name(item_name, hash_length, hex_dig)
-            file_path = out_path / file_name
-
+        # If the file name already exists - it's the same item, just overwrite
         file_path.write_text(item_template)
